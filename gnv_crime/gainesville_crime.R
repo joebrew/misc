@@ -52,5 +52,5 @@ plot(zip, col = "grey", border = "white")
 
 points(gnv$lon, gnv$lat,
        col = adjustcolor(rainbow(nrow(gnv)), alpha.f = 0.3),
-       pch = 16,
+       pch = 1,
        cex = 0.3)
