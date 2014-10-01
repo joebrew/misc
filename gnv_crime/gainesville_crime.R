@@ -317,7 +317,7 @@ library(weatherData)
 
 # Get weather for just one day
 x <- getWeatherForDate("GNV", start_date = "2014-04-14",
-                       #end_date = "2014-04-15",
+                       end_date = "2014-04-30",
                   opt_all_columns = TRUE)
 
 
