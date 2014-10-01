@@ -1,0 +1,165 @@
+---
+title: "LBW tutorial"
+author: "Joe Brew"
+date: "10/01/2014"
+output: html_document
+---
+
+For this activity, we'll be examining the incidence of low birth weight around the state of Florida.  Data are from Florida Charts (<http://www.floridacharts.com>), a site well worth checking out for lots of aggregated health data in our state.
+
+## 1. Get the data.
+
+Create a folder named lbw_tutorial and download the data into that folder.  The specific dataset for this activity is at <https://github.com/joebrew/misc/blob/master/lbw_tutorial/lbw.csv>.  If you're familiar with github, you can clone the joebrew/misc directory entirely; if not, simply go to the previous link and download the data as a csv file (right click on the "Raw" button and save as a file). 
+
+## 2. Start an R script.
+
+In the lbw_tutorial directory, create an R script named lbw.R.
+
+## 3. Read in the data. 
+
+You'll do this in two steps.  First use 
+```{r, eval = FALSE}
+setwd()
+```
+to set your working directory, then use
+```{r, eval = FALSE}
+read.csv()
+```
+to read in the data.  Assign it to an object named lbw.
+
+```{r, echo = FALSE, eval = TRUE, message = FALSE}
+setwd('~/Documents/misc/lbw_tutorial')
+lbw <- read.csv("lbw.csv")
+```
+
+## 4. Examine the data's structure.
+
+Ensure that numerical / character / categorical variables are as they should be.  Do this using 
+```{r, eval = FALSE} 
+str() 
+head()
+tail()
+summary()
+```
+
+If not, transform them using
+```{r, eval = FALSE}
+as.character()
+as.numeric()
+as.factor()
+````
+
+## 5. Explore the data's contents
+
+First, use dplyr to arrange (sort) the data by percent poverty
+```{r results='hide', message = FALSE}
+library(dplyr)
+lbw <- 
+  lbw %>%
+  arrange(percent_poverty)
+```
+
+Make an ordered barplot of the percent_poverty variable using 
+```{r, eval = FALSE}
+barplot()
+```
+Use the names.arg, cex.names and las = 3 arguments in the barplot() function to print the county names vertically below the chart. If you want a challenge, color Alachua's bar red and print a horizontal line at Alachua's poverty rate.
+
+```{r, eval = TRUE, echo = FALSE}
+#### !!!!!!!!!!
+mycols <- rep(adjustcolor("darkgreen", alpha.f = 0.1), nrow(lbw))
+mycols[which(lbw$county == "Alachua")] <- adjustcolor("darkred", alpha.f =0.5)
+barplot(lbw$percent_poverty,
+        col = mycols,
+        border = adjustcolor("black", alpha.f = 0.1),
+        names.arg = lbw$county,
+        las = 3,
+        cex.names = 0.5)
+abline(h = lbw$percent_poverty[which(lbw$county == "Alachua")],
+       col = adjustcolor("darkred", alpha.f = 0.5))
+```
+
+Make a histogram of percent_poverty.
+
+```{r, eval = TRUE, echo = FALSE}
+hist(lbw$percent_poverty, col = adjustcolor(rainbow(20), alpha.f = 0.4),
+     border = "grey",
+     xlab = "Poverty rate", breaks = 20,
+     main = "Distribution of poverty rate in Florida by county")
+```
+
+Re-arrange our data by population
+```{r, eval = TRUE, echo = TRUE}
+lbw <- lbw %>%
+  arrange(total_pop)
+```
+
+
+## 6. Create some useful new variables
+Create variables named white_per, black_per and other_per. Also create lbw_per. These should be percent variables and should be easy to construct using simple divison and the total_pop vector and live_births vector.  
+
+
+```{r, eval = TRUE, echo = FALSE}
+#### !!!!!!!!!!
+lbw <- 
+  lbw %>%
+  mutate(white_per = white / total_pop * 100,
+         black_per = black / total_pop * 100,
+         other_per = other / total_pop * 100,
+         lbw_per = lbw_births / live_births * 100)
+```
+
+
+
+## 7. Plot the relationship between the poverty rate and lbw rate.  Use
+
+```{r, eval = FALSE}
+plot(x, y)
+```
+
+If you want to get fancy, make the size (cex) a function of a county's population size, as in the below plot
+
+```{r, eval = TRUE, echo = FALSE}
+#### !!!!!!!!!!
+plot(lbw$percent_poverty, lbw$lbw_per,
+     xlab = "Percent poverty",
+     ylab = "LBW rate",
+     pch = 16, 
+     col = adjustcolor("red", alpha.f = 0.3),
+     cex = lbw$total_pop ^ (1/4) / 10)
+points(lbw$percent_poverty, lbw$lbw_per,
+     col = adjustcolor("black", alpha.f = 0.5),
+     cex = lbw$total_pop ^ (1/4) / 10)
+```
+
+
+## 8. Plot the relationship between the percent of residents who are white and the lbw rate.
+
+```{r, eval = TRUE, echo = FALSE}
+#### !!!!!!!!!!
+plot(lbw$white_per, lbw$lbw_per,
+     xlab = "Percent white",
+     ylab = "LBW rate",
+     pch = 16, 
+     col = adjustcolor("darkblue", alpha.f = 0.3),
+     cex = lbw$total_pop ^ (1/4) / 10)
+points(lbw$white_per, lbw$lbw_per,
+     col = adjustcolor("black", alpha.f = 0.5),
+     cex = lbw$total_pop ^ (1/4) / 10)
+```
+
+##9. Construct a linear model to describe the relationship between lbw rate (y) and two independent variables: percent of residents who are black and the percent of residents who are poor. Name your linear model "fit", and then summarize, plot it and calculate confidence intervals
+
+```{r, eval = FALSE}
+fit <- lm()
+summary(fit)
+plot(fit)
+confint(fit)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+#### !!!!!!!!!!
+fit <- lm(lbw_per ~ black_per + percent_poverty, data = lbw)
+```
+
+## 10. Intepret the regression.  At the county-level, after adjustment, what factors are significantly associated with lbw rate?
