@@ -1,7 +1,10 @@
+library(RCurl)
+
 #########
 # SET LOCAL WORKING DIRECTORY
 #########
 setwd("C:/Users/BrewJR/Documents/misc") # change this line to whereever you cloned misc
+#setwd("/home/joebrew/Documents/misc/")
 setwd("gnv_crime")
 
 
@@ -9,7 +12,8 @@ setwd("gnv_crime")
 # READ IN GAINESVILLE CRIME DATA
 #########
 # define the link for gainesville crime
-my_link1 <- "https://data.cityofgainesville.org/api/views/9ccb-cyth/rows.csv"
+my_link1 <- "http://data.cityofgainesville.org/api/views/9ccb-cyth/rows.csv"
+my_link2 <- getURL(my_link1)
 
 # read in the data
 gnv <- read.csv(my_link1)
@@ -129,7 +133,10 @@ zip_df <- merge(x = zip_df,
                 by = "zip",
                 all.x = TRUE,
                 all.y = FALSE)
-zip$n_crimes <- zip_df$n_crimes
+for (i in zip$zip){
+  zip$n_crimes[which(zip$zip == i)] <-
+    zip_df$n_crimes[which(zip_df$zip == i)]
+}
 
 ##########
 # WRITE A FUNCTION FOR MAKING A CHOROPLETH MAP OF THESE ZIP CODES
@@ -189,9 +196,8 @@ library(rCharts)
 #zip_geoj <- readOGR("zips_alachua", "ACDPS_zipcode")
 mymap <- Leaflet$new()
 mymap$tileLayer(provider = "Stamen.TonerLite")
-mymap$setView(c(29.55, -82.12), zoom = 10)
+mymap$setView(c(29.65, -82.3), zoom = 10)
 mymap$enablePopover(TRUE)
-mymap$geoJson(zipgj)
 
 mymap$fullScreen(TRUE)
 
@@ -293,7 +299,6 @@ browseURL(map)
 
 
 ####################
-install.packages("rgbif")
 library(rgbif)
 file2 <-  "/zips_alachua/ACDPS_zipcode.shp"
 ## Success! File is at /Users/scottmac2/abiesmagmap.geojson
