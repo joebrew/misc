@@ -316,7 +316,11 @@ gnv <- gnv[which(gnv$date >= "2013-01-01" &
 library(weatherData)
 
 # Get weather for just one day
-getWeatherForDate("GNV", "2014-04-14")
+x <- getWeatherForDate("GNV", start_date = "2014-04-14",
+                       #end_date = "2014-04-15",
+                  opt_all_columns = TRUE)
+
+
 
 # Get weather for a period of time
 weather <- getSummarizedWeather("GNV", start_date = min(gnv$date), 
