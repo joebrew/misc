@@ -55,9 +55,180 @@ gnv$date <- as.Date(substr(gnv$Offense.Date,1,10), format = "%m/%d/%Y")
 # view it
 hist(gnv$date, breaks = 100)
 
-# Remove dates prior to 2011
-gnv <- gnv[which(gnv$date > "2011-01-01"),]
+# Remove dates prior to 2013
+gnv <- gnv[which(gnv$date > "2013-01-01"),]
 hist(gnv$date, breaks = 100)
+
+######### 
+# ADVANCED LEAFLET MAPS
+##########
+
+# Read in zip code shape file
+library(rgdal)
+#library(sp)
+zip <- readOGR("zips_alachua", "ACDPS_zipcode")
+zip <- spTransform(zip, CRS("+init=epsg:4326"))
+zip$zip <- as.numeric(as.character(zip$ZIP))
+
+library(rCharts)
+# read in geojson version of zip
+#zip_geoj <- readOGR("zips_alachua", "ACDPS_zipcode")
+mymap <- Leaflet$new()
+mymap$tileLayer(provider = "Stamen.TonerLite")
+mymap$setView(c(29.65, -82.3), zoom = 10)
+mymap$enablePopover(TRUE)
+
+mymap$fullScreen(TRUE)
+
+for (i in 1:100){
+  mymap$marker(c(gnv$lat[i], gnv$lon[i]),
+               bindPopup = paste(gnv$Narrative[i],
+                                 gnv$Offense.Date[i]))
+  
+}
+
+mymap
+
+# Make geojson object
+library(leafletR)
+zip_df <- data.frame(zip)
+zipgj <- toGeoJSON(data = zip_df)
+
+
+   # Read in polygon shapefile using handy maptools function
+   test <- zip
+
+   # Extract the list of Polygons objects
+   polys <- slot(test,"polygons")
+
+polys_list <- list()
+   # Within each Polygons object
+   #    Extract the Polygon list (assuming just one per Polygons)
+   #    And Extract the coordinates from each Polygon
+   for (i in 1:length(polys)) {
+         #print(paste("Polygon #",i))
+     polys_list[[i]] <-  slot(slot(polys[[i]],"Polygons")[[1]],"coords")
+     }
+
+xy <- polys_list[2]
+xy <- matrix(unlist(xy), ncol = 2)
+xyjson = RJSONIO::toJSON(xy)
+
+jsonX = paste(
+  '{"type":"FeatureCollection","features":[
+{"type":"Feature",
+"properties":{"region_id":1, "region_name":"My Region"},
+"geometry":{"type":"Polygon","coordinates": [ ',xyjson,' ]}}]}')
+
+polys = RJSONIO::fromJSON(jsonX)
+mymap = Leaflet$new()
+mymap$tileLayer(provider = "Stamen.TonerLite")
+mymap$setView(c(29.65, -82.3), zoom = 10)
+mymap$enablePopover(TRUE)
+mymap$geoJson(polys)
+mymap
+
+###########
+# GET JUST ONE POLYGON
+###########
+
+# Make geojson object
+library(leafletR)
+
+# Read in polygon shapefile using handy maptools function
+test <- zip
+
+# Extract the list of Polygons objects
+polys <- slot(test,"polygons")
+
+polys_list <- list()
+# Within each Polygons object
+#    Extract the Polygon list (assuming just one per Polygons)
+#    And Extract the coordinates from each Polygon
+for (i in 1:length(polys)) {
+  #print(paste("Polygon #",i))
+  polys_list[[i]] <-  slot(slot(polys[[i]],"Polygons")[[1]],"coords")
+}
+
+xy <- polys_list#[1]
+
+joe <- list()
+for (i in 1:length(polys_list)){
+  xyz <- matrix(unlist(xy[[i]]), ncol = 2)
+  xyjson = RJSONIO::toJSON(xyz)
+  
+  jsonX = paste(
+    '{"type":"FeatureCollection","features":[
+{"type":"Feature",
+"properties":{"region_id":1, "region_name":"My Region"},
+"geometry":{"type":"Polygon","coordinates": [ ',xyjson,' ]}}]}')
+  
+  polys = RJSONIO::fromJSON(jsonX)
+  
+  joe[[i]] <- polys
+}
+
+
+mymap = Leaflet$new()
+mymap$tileLayer(provider = "Stamen.TonerLite")
+mymap$setView(c(29.65, -82.3), zoom = 10)
+mymap$enablePopover(TRUE)
+mymap$geoJson(joe[[10]])
+
+mymap
+
+
+###########
+# TRY TO GET A SINGLE GEOJSON OBJECT
+###########
+
+# Make geojson object
+library(leafletR)
+
+# Read in polygon shapefile using handy maptools function
+test <- zip
+
+# Extract the list of Polygons objects
+polys <- slot(test,"polygons")
+
+polys_list <- list()
+# Within each Polygons object
+#    Extract the Polygon list (assuming just one per Polygons)
+#    And Extract the coordinates from each Polygon
+for (i in 1:length(polys)) {
+  #print(paste("Polygon #",i))
+  polys_list[[i]] <-  slot(slot(polys[[i]],"Polygons")[[1]],"coords")
+}
+
+xy <- polys_list#[1]
+xy <- do.call("rbind", xy)
+xyz <- xy
+
+
+xyjson = RJSONIO::toJSON(xyz)
+
+jsonX = paste(
+  '{"type":"FeatureCollection","features":[
+{"type":"Feature",
+  "properties":{"region_id":1, "region_name":"My Region"},
+  "geometry":{"type":"Polygon","coordinates": [ ',xyjson,' ]}}]}')
+
+polys = RJSONIO::fromJSON(jsonX)
+
+mymap = Leaflet$new()
+mymap$tileLayer(provider = "Stamen.TonerLite")
+mymap$setView(c(29.65, -82.3), zoom = 10)
+mymap$enablePopover(TRUE)
+mymap$geoJson(polys)
+
+mymap
+
+
+
+
+
+
+
 
 
 

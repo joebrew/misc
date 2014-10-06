@@ -1,0 +1,257 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "100",
+        "PO_NAME": "3",
+        "zip": "32622"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [100,32622]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "18694",
+        "PO_NAME": "5",
+        "zip": "32609"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17668,32609]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "24256",
+        "PO_NAME": "5",
+        "zip": "32608"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22945,32608]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "14169",
+        "PO_NAME": "5",
+        "zip": "32641"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13573,32641]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "17529",
+        "PO_NAME": "5",
+        "zip": "32601"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17755,32601]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "9585",
+        "PO_NAME": "5",
+        "zip": "32653"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7988,32653]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "8941",
+        "PO_NAME": "7",
+        "zip": "32643"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7557,32643]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "9470",
+        "PO_NAME": "1",
+        "zip": "32615"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8824,32615]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "12617",
+        "PO_NAME": "5",
+        "zip": "32606"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10680,32606]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "23449",
+        "PO_NAME": "5",
+        "zip": "32605"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21349,32605]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "7162",
+        "PO_NAME": "10",
+        "zip": "32669"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6904,32669]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "4662",
+        "PO_NAME": "6",
+        "zip": "32640"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4151,32640]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "6045",
+        "PO_NAME": "2",
+        "zip": "32618"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4802,32618]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "2680",
+        "PO_NAME": "9",
+        "zip": "32667"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2409,32667]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "4662",
+        "PO_NAME": "NA",
+        "zip": "NA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4151,A]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "1598",
+        "PO_NAME": "11",
+        "zip": "32694"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1676,32694]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "5861",
+        "PO_NAME": "8",
+        "zip": "32666"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5507,32666]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "1255",
+        "PO_NAME": "4",
+        "zip": "32631"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1014,32631]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "23132",
+        "PO_NAME": "5",
+        "zip": "32607"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21406,32607]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "8068",
+        "PO_NAME": "5",
+        "zip": "32611"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8023,32611]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "POP1996": "5242",
+        "PO_NAME": "5",
+        "zip": "32603"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [5271,32603]
+      }
+    }
+  ]
+}
