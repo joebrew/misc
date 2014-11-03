@@ -1,16 +1,3 @@
-myinfo <- 
-  list(
-    Name="SHARC Research Assistants: Jane Ritho, Tyrone Wizzard", 
-    Current="CURRENT PROJECTS",
-    Projects=data.frame(
-      Projects=c("WHAT_IF CLINICAL TRIAL", "MMP SURVEILLANCE STUDY", 
-                  "FLORIDA COHORT SURVEY")),
-    office="CTRB 4206", 
-    phone ="352-872-9534",
-    email ="jnr5443@ufl.edu")
-myinfo
-
-cat("\n\n***TEST PROGRAM TO READ CONCURRENT MEDICATION LIST DATA***\n")
 
 
 ############
