@@ -1,0 +1,13 @@
+"X","Drug.Name","Dosage","Frequency","Baseline","Month.2","Month.4","Month.7","Comments","id"
+1,"Seroquel (150 mg)",1,"1x","Yes","Yes","Yes","Yes",NA,4910
+2,"Gabitin (300 mg)",1,"3x","Yes","No","No","No",NA,4910
+3,"Eflexer (75 mg)",1,"1x","Yes","No","No","No",NA,4910
+1,"Seroquel (150 mg)",1,"1x","Yes","Yes","Yes","Yes",1,4400
+2,"Gabitin (300 mg)",1,"3x","Yes","No","No","No",1,4400
+3,"Eflexer (75 mg)",1,"1x","Yes","No","No","No",1,4400
+4,"Seroquel (150 mg)",1,"1x","Yes","Yes","Yes","Yes",2,4400
+5,"Gabitin (300 mg)",1,"3x","Yes","No","No","No",1,4400
+6,"Eflexer (75 mg)",1,"1x","Yes","No","No","No",1,4400
+7,"Seroquel (150 mg)",1,"1x","Yes","Yes","Yes","Yes",1,4400
+8,"Gabitin (300 mg)",1,"3x","Yes","No","No","No",3,4400
+9,"Eflexer (75 mg)",1,"1x","Yes","No","No","No",1,4400
