@@ -92,7 +92,7 @@ choro <- function(
            bty = "n")
   }
 
-  compassRose(x = -80.5 ,y = 30,rot=0,cex=0.25)
+  compass_rose(x = -80.5 ,y = 30,rot=0,cex=0.25)
 }
 
 # choro(shape = fl,
