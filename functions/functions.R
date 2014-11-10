@@ -95,17 +95,17 @@ choro <- function(
   compassRose(x = -80.5 ,y = 30,rot=0,cex=0.25)
 }
 
-choro(shape = fl,
-      boundary = boundary,
-      var = fl$lbw_rate2014,
-      long_legend = FALSE,
-      legend_pos = "center",
-      color1 = "lightblue",
-      color2 = "red")
-
-for (i in 2000:2014){
-  choro(shape = fl, boundary = boundary, 
-        var = fl@data[,paste0("lbw_rate", i)])
-  Sys.sleep(1)
-  title(main = i)
-}
+# choro(shape = fl,
+#       boundary = boundary,
+#       var = fl$lbw_rate2014,
+#       long_legend = FALSE,
+#       legend_pos = "center",
+#       color1 = "lightblue",
+#       color2 = "red")
+# 
+# for (i in 2000:2014){
+#   choro(shape = fl, boundary = boundary, 
+#         var = fl@data[,paste0("lbw_rate", i)])
+#   Sys.sleep(1)
+#   title(main = i)
+# }
