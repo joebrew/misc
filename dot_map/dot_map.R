@@ -40,9 +40,11 @@ DotFun <- function(main_shape,
                    cex = 0.01,
                    border = "white",
                    fill = "white",
-                   alpha = 0.1){
-  
-  plot(main_shape, col = fill, border = border)
+                   alpha = 0.1,
+                   add = FALSE){
+  if(!add){
+    plot(main_shape, col = fill, border = border)
+  }
   for (i in 1:nrow(main_shape)){ 
     temp <- main_shape[i,]
     
