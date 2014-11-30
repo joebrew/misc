@@ -1,23 +1,23 @@
-#####
-# SET WORKING DIRECTORY CONDITIONAL TO SYSTEM
-#####
-if ( Sys.info()["sysname"] == "Linux" ){
-  public <- "/home/joebrew/Documents/misc/dot_map"
-} else {
-  public <- "C:/Users/BrewJR/Documents/misc/dot_map"
-}
-setwd(public) 
+# #####
+# # SET WORKING DIRECTORY CONDITIONAL TO SYSTEM
+# #####
+# if ( Sys.info()["sysname"] == "Linux" ){
+#   public <- "/home/joebrew/Documents/misc/dot_map"
+# } else {
+#   public <- "C:/Users/BrewJR/Documents/misc/dot_map"
+# }
+# setwd(public) 
 
 #####
 # ATTACH PACKAGES
 #####
 library(maptools)
 library(rgdal)
-
-#####
-# READ IN ALACHUA COUNTY SHAPEFILE WITH POP NUMBERS
-#####
-ct <- readOGR(paste0(public, "/Alachua_CT_POP"), "Alachua_CT_POP")
+# 
+# #####
+# # READ IN ALACHUA COUNTY SHAPEFILE WITH POP NUMBERS
+# #####
+# ct <- readOGR(paste0(public, "/Alachua_CT_POP"), "Alachua_CT_POP")
 
 #####
 # COLLAPSE MAP INTO ONLY OUTER BOUNDARY
@@ -27,7 +27,7 @@ collapse_map <- function(x){
   boundary <- unionSpatialPolygons(x, rep(1, length(x@polygons)))
 }
 
-ct_boundary <- collapse_map(ct)
+# ct_boundary <- collapse_map(ct)
 
 #########
 # FUNCTION TO PLOT WITH DOT DENSITY
@@ -98,12 +98,12 @@ DotFun <- function(main_shape,
            col = adjustcolor(points_col, alpha.f = alpha))
   }
 }
-
-DotFun(main_shape = ct,
-       points_number = 1000,
-       points_var = ct$pop,
-       points_col = "darkred",
-       cex = 0.001,
-       border = "black",
-       fill = "grey",
-       alpha = 0.5)
+# 
+# DotFun(main_shape = ct,
+#        points_number = 1000,
+#        points_var = ct$pop,
+#        points_col = "darkred",
+#        cex = 0.001,
+#        border = "black",
+#        fill = "grey",
+#        alpha = 0.5)
