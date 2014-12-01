@@ -46,7 +46,8 @@ choro <- function(
   long_legend = TRUE,
   fixed_scale = NULL,
   lwd = 0.2,
-  border = TRUE){
+  border = TRUE, 
+  add = FALSE){
   my_colors <- colorRampPalette(c(color1, "white", color2))(10)
   if(!is.null(fixed_scale)){
     if(length(fixed_scale) != 10){stop("Fixed scale must be of length 10")}
@@ -62,7 +63,7 @@ choro <- function(
   }
   map_colors <- my_colors[my_values]
   plot(shape, col = map_colors, border = border, lwd = lwd,
-       main = main)
+       main = main, add = add)
   plot(boundary, add = TRUE)
   if(long_legend){
     legend_colors <- colorRampPalette(my_colors)(25)
