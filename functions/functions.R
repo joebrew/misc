@@ -46,7 +46,8 @@ choro <- function(
   long_legend = TRUE,
   fixed_scale = NULL,
   lwd = 0.2,
-  border = TRUE, 
+  border = TRUE,
+  legend_text_col = "black",
   add = FALSE){
   my_colors <- colorRampPalette(c(color1, "white", color2))(10)
   if(!is.null(fixed_scale)){
@@ -77,7 +78,8 @@ choro <- function(
            cex = 0.75,
            y.intersp = 0.5,
            border=NA,
-           bty = "n")
+           bty = "n",
+           text.col = legend_text_col)
   } else{
     legend_colors <- colorRampPalette(my_colors)(11)
     legend(legend_pos, # position
@@ -90,7 +92,8 @@ choro <- function(
            cex = 0.75,
            y.intersp = 0.5,
            border=NA,
-           bty = "n")
+           bty = "n",
+           text.col = legend_text_col)
   }
 
   compass_rose(x = -80.5 ,y = 30,rot=0,cex=0.25)
