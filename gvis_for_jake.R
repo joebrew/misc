@@ -30,7 +30,7 @@ plot(dat)
 x <- gvisMotionChart(data = dat, 
                      idvar="id", 
                      timevar="year",
-                     xvar = "frLunch13", # Percent of kids on free/reduced lunch
+                     xvar = "year", # or frLunch13 - Percent of kids on free/reduced lunch
                      yvar = "immRate", # Immunization rate
                      colorvar = "type", # elem / middle / high
                      sizevar = "totMem") # total number of enrolled student
