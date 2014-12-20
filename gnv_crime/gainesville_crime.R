@@ -3,8 +3,8 @@ library(RCurl)
 #########
 # SET LOCAL WORKING DIRECTORY
 #########
-setwd("C:/Users/BrewJR/Documents/misc") # change this line to whereever you cloned misc
-#setwd("/home/joebrew/Documents/misc/")
+#setwd("C:/Users/BrewJR/Documents/misc") # change this line to whereever you cloned misc
+setwd("/home/joebrew/Documents/misc/")
 setwd("gnv_crime")
 
 
@@ -89,57 +89,24 @@ for (i in 1:100){
 
 mymap
 
+##################
 # Make geojson object
-library(leafletR)
-zip_df <- data.frame(zip)
-zipgj <- toGeoJSON(data = zip_df)
+##################
 
-
-   # Read in polygon shapefile using handy maptools function
-   test <- zip
-
-   # Extract the list of Polygons objects
-   polys <- slot(test,"polygons")
-
-polys_list <- list()
-   # Within each Polygons object
-   #    Extract the Polygon list (assuming just one per Polygons)
-   #    And Extract the coordinates from each Polygon
-   for (i in 1:length(polys)) {
-         #print(paste("Polygon #",i))
-     polys_list[[i]] <-  slot(slot(polys[[i]],"Polygons")[[1]],"coords")
-     }
-
-xy <- polys_list[2]
-xy <- matrix(unlist(xy), ncol = 2)
-xyjson = RJSONIO::toJSON(xy)
-
-jsonX = paste(
-  '{"type":"FeatureCollection","features":[
-{"type":"Feature",
-"properties":{"region_id":1, "region_name":"My Region"},
-"geometry":{"type":"Polygon","coordinates": [ ',xyjson,' ]}}]}')
-
-polys = RJSONIO::fromJSON(jsonX)
-mymap = Leaflet$new()
-mymap$tileLayer(provider = "Stamen.TonerLite")
-mymap$setView(c(29.65, -82.3), zoom = 10)
-mymap$enablePopover(TRUE)
-mymap$geoJson(polys)
-mymap
-
-###########
-# GET JUST ONE POLYGON
-###########
-
-# Make geojson object
 library(leafletR)
 
-# Read in polygon shapefile using handy maptools function
-test <- zip
+# Read in state county shapefile
+fl <- readOGR("counties", "FCTY2")
+
+# make fl into a dataframe
+fl_df <- data.frame(fl)
+
+# Make fl_df into a gesjson object
+fl_gj <- toGeoJSON(data = fl_df)
+
 
 # Extract the list of Polygons objects
-polys <- slot(test,"polygons")
+polys <- slot(fl,"polygons")
 
 polys_list <- list()
 # Within each Polygons object
@@ -173,7 +140,11 @@ mymap = Leaflet$new()
 mymap$tileLayer(provider = "Stamen.TonerLite")
 mymap$setView(c(29.65, -82.3), zoom = 10)
 mymap$enablePopover(TRUE)
-mymap$geoJson(joe[[10]])
+for (i in 1:length(joe)){
+  mymap$geoJson(joe[[i]])
+  
+}
+#mymap$geoJson(joe[[1]])
 
 mymap
 
