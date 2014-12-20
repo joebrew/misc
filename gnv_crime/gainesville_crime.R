@@ -94,6 +94,8 @@ mymap
 ##################
 
 library(leafletR)
+library(maptools)
+library(rgdal)
 
 # Read in state county shapefile
 fl <- readOGR("counties", "FCTY2")
@@ -156,11 +158,8 @@ mymap
 # Make geojson object
 library(leafletR)
 
-# Read in polygon shapefile using handy maptools function
-test <- zip
-
 # Extract the list of Polygons objects
-polys <- slot(test,"polygons")
+polys <- slot(fl,"polygons")
 
 polys_list <- list()
 # Within each Polygons object
