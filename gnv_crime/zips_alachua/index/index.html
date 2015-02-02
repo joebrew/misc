@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<link rel="dat1" type="application/json" href="subdat.geojson" />
 	<style type="text/css">
 		body {
 			padding: 0;
@@ -83,6 +84,9 @@
 	<div id="map"></div>
 	<script type="text/javascript">
 		var map = L.map('map');
+		
+		// scale bar
+		L.control.scale().addTo(map);
 
 		// base layer
 		var baseMaps = {};
@@ -121,22 +125,23 @@
 		}
 
 		// data layers
+        var layers = {};
         var fitBounds = true; 		
-		function addDataToMap(data, style) {
-			var dataLayer = L.geoJson(data, {
-				onEachFeature: (typeof onEachFeature == "undefined")? undefined: onEachFeature,
+		function addDataToMap(data, style, layer) {
+			layers[layer] = L.geoJson(data, {
+				onEachFeature: (typeof onEachFeature == "undefined") ? undefined : onEachFeature,
 				pointToLayer: function (feature, latlng) {return L.circleMarker(latlng);},
 				style: style,
 			});
-			dataLayer.addTo(map);
+			layers[layer].addTo(map);
 			
-			if (fitBounds) {
-				map.fitBounds(dataLayer.getBounds());
+			if(fitBounds) {
+				map.fitBounds(layers[layer].getBounds());
 				fitBounds = false;
 			}
 		};
 		
-		if (typeof style1 == "undefined") style1 = undefined;
+		if(typeof style1 == "undefined") style1 = undefined;
 		addDataToMap({
 		  "type": "FeatureCollection",
 		  "features": [
@@ -165,7 +170,7 @@
 		        "Population": "18694",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32609",
-		        "n_crimes": "2447",
+		        "n_crimes": "11207",
 		        "pop": "18694",
 		        "ID": "1"
 		      },
@@ -182,7 +187,7 @@
 		        "Population": "24256",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32608",
-		        "n_crimes": "3418",
+		        "n_crimes": "12366",
 		        "pop": "24256",
 		        "ID": "2"
 		      },
@@ -199,7 +204,7 @@
 		        "Population": "14169",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32641",
-		        "n_crimes": "2632",
+		        "n_crimes": "10348",
 		        "pop": "14169",
 		        "ID": "3"
 		      },
@@ -216,7 +221,7 @@
 		        "Population": "17529",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32601",
-		        "n_crimes": "7403",
+		        "n_crimes": "18790",
 		        "pop": "17529",
 		        "ID": "4"
 		      },
@@ -233,7 +238,7 @@
 		        "Population": "9585",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32653",
-		        "n_crimes": "799",
+		        "n_crimes": "3060",
 		        "pop": "9585",
 		        "ID": "5"
 		      },
@@ -250,7 +255,7 @@
 		        "Population": "8941",
 		        "PO_NAME": "HIGH SPRINGS",
 		        "zip": "32643",
-		        "n_crimes": "8",
+		        "n_crimes": "45",
 		        "pop": "8941",
 		        "ID": "6"
 		      },
@@ -267,7 +272,7 @@
 		        "Population": "9470",
 		        "PO_NAME": "ALACHUA",
 		        "zip": "32615",
-		        "n_crimes": "20",
+		        "n_crimes": "101",
 		        "pop": "9470",
 		        "ID": "7"
 		      },
@@ -284,7 +289,7 @@
 		        "Population": "12617",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32606",
-		        "n_crimes": "449",
+		        "n_crimes": "1006",
 		        "pop": "12617",
 		        "ID": "8"
 		      },
@@ -301,7 +306,7 @@
 		        "Population": "23449",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32605",
-		        "n_crimes": "1844",
+		        "n_crimes": "7437",
 		        "pop": "23449",
 		        "ID": "9"
 		      },
@@ -318,7 +323,7 @@
 		        "Population": "7162",
 		        "PO_NAME": "NEWBERRY",
 		        "zip": "32669",
-		        "n_crimes": "10",
+		        "n_crimes": "53",
 		        "pop": "7162",
 		        "ID": "10"
 		      },
@@ -335,7 +340,7 @@
 		        "Population": "4662",
 		        "PO_NAME": "HAWTHORNE",
 		        "zip": "32640",
-		        "n_crimes": "5",
+		        "n_crimes": "43",
 		        "pop": "4662",
 		        "ID": "11"
 		      },
@@ -352,7 +357,7 @@
 		        "Population": "6045",
 		        "PO_NAME": "ARCHER",
 		        "zip": "32618",
-		        "n_crimes": "10",
+		        "n_crimes": "29",
 		        "pop": "6045",
 		        "ID": "12"
 		      },
@@ -369,7 +374,7 @@
 		        "Population": "2680",
 		        "PO_NAME": "MICANOPY",
 		        "zip": "32667",
-		        "n_crimes": "13",
+		        "n_crimes": "41",
 		        "pop": "2680",
 		        "ID": "13"
 		      },
@@ -386,7 +391,7 @@
 		        "Population": "4662",
 		        "PO_NAME": "NA",
 		        "zip": "NA",
-		        "n_crimes": "8",
+		        "n_crimes": "NA",
 		        "pop": "4662",
 		        "ID": "14"
 		      },
@@ -403,7 +408,7 @@
 		        "Population": "1598",
 		        "PO_NAME": "WALDO",
 		        "zip": "32694",
-		        "n_crimes": "1",
+		        "n_crimes": "22",
 		        "pop": "1598",
 		        "ID": "15"
 		      },
@@ -420,7 +425,7 @@
 		        "Population": "5861",
 		        "PO_NAME": "MELROSE",
 		        "zip": "32666",
-		        "n_crimes": "NA",
+		        "n_crimes": "2",
 		        "pop": "5861",
 		        "ID": "16"
 		      },
@@ -437,7 +442,7 @@
 		        "Population": "1255",
 		        "PO_NAME": "EARLETON",
 		        "zip": "32631",
-		        "n_crimes": "NA",
+		        "n_crimes": "2",
 		        "pop": "1255",
 		        "ID": "17"
 		      },
@@ -454,7 +459,7 @@
 		        "Population": "23132",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32607",
-		        "n_crimes": "1987",
+		        "n_crimes": "6914",
 		        "pop": "23132",
 		        "ID": "18"
 		      },
@@ -471,7 +476,7 @@
 		        "Population": "8068",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32611",
-		        "n_crimes": "12",
+		        "n_crimes": "49",
 		        "pop": "8068",
 		        "ID": "19"
 		      },
@@ -488,7 +493,7 @@
 		        "Population": "5242",
 		        "PO_NAME": "GAINESVILLE",
 		        "zip": "32603",
-		        "n_crimes": "617",
+		        "n_crimes": "2455",
 		        "pop": "5242",
 		        "ID": "20"
 		      },
@@ -498,8 +503,9 @@
 		      }
 		    }
 		  ]
-		}, style1);
-				// Graduated legend
+		}, style1, "subdat");
+
+		// legend
 				var legend = L.control({position: 'bottomright'});
 				legend.onAdd = function(map) {
 					var div = L.DomUtil.create('div', 'legend');

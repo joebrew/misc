@@ -12,12 +12,12 @@ setwd("gnv_crime")
 # READ IN GAINESVILLE CRIME DATA
 #########
 # define the link for gainesville crime
-my_link1 <- "http://data.cityofgainesville.org/api/views/9ccb-cyth/rows.csv"
-my_link2 <- getURL(my_link1)
-
-# read in the data
-gnv <- read.csv(my_link1)
-
+# my_link1 <- "https://data.cityofgainesville.org/api/views/gvua-xt9q/rows.csv?accessType=DOWNLOAD" #"http://data.cityofgainesville.org/api/views/9ccb-cyth/rows.csv"
+# my_link2 <- getURL(my_link1)
+# 
+# # read in the data
+# gnv <- read.csv(my_link1)
+gnv <- read.csv("feb2.csv")
 #########
 # CLEAN IT UP A BIT
 #########
@@ -44,19 +44,19 @@ JoeFun <- function(x){
   
   return(bb)
 }
-x <- JoeFun(gnv$Location.1)
+x <- JoeFun(gnv$location)
 # now join x to gnv
 gnv <- cbind(gnv, x)
 rm(x)
 
 # Make a date column
-gnv$date <- as.Date(substr(gnv$Offense.Date,1,10), format = "%m/%d/%Y")
+#gnv$date <- as.Date(substr(gnv$Offense.Date,1,10), format = "%m/%d/%Y")
 
 # view it
 hist(gnv$date, breaks = 100)
 
 # Remove dates prior to 2013
-gnv <- gnv[which(gnv$date > "2013-01-01"),]
+#gnv <- gnv[which(gnv$date > "2013-01-01"),]
 hist(gnv$date, breaks = 100)
 
 ######### 
@@ -82,8 +82,8 @@ mymap$fullScreen(TRUE)
 
 for (i in 1:100){
   mymap$marker(c(gnv$lat[i], gnv$lon[i]),
-               bindPopup = paste(gnv$Narrative[i],
-                                 gnv$Offense.Date[i]))
+               bindPopup = paste(gnv$narrative[i],
+                                 gnv$offense_date[i]))
   
 }
 
