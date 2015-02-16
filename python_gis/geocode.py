@@ -84,7 +84,8 @@ def multi_geo(df = None, fun = geocoder.google):
 
 
 # Geocode #####
-write_dir = 'data/sketches_data/geo/geocoders_comparison/pytest'
+# Assign to write_dir wherever you want to export the csvs
+#write_dir = '/home/joebrew/Desktop'
 os.chdir(write_dir)
 
 # ArcGIS
