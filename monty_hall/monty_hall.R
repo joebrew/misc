@@ -6,7 +6,10 @@ monty_hall <- function(stay = TRUE){
   doors <- 1:3
   picked <- sample(1:3, 1)
   not_picked <- doors[-picked]
-  show <- sample(which(posibs[not_picked] == "goat"), 1)
+  show <- sample(not_picked, 1)
+  while(posibs[show] == "car"){
+    show <- sample(not_picked, 1)
+  }
   
   if(!stay){
     picked <- not_picked[-show]
@@ -25,10 +28,10 @@ cols <- c("red", "blue")
 setwd('/home/joebrew/Desktop/temp')
 
 for (i in 1:1000){
-  for (j in c("a", "b", "c", "d", "e")){
+  for (j in c("a")){
     set.seed(i * sample(1:10, 1) + 1^2)
     stays[i] <- monty_hall(stay = TRUE)
-    changes[i] <- monty_hall(stay = FALSE)
+    changes[i] <- ifelse(stays[i] == "car", "goat", "car")
     
     x <- stays[1:i]
     y <- changes[1:i]
@@ -77,7 +80,5 @@ for (i in 1:1000){
     #Sys.sleep(0.01)  
     
   }
-  
-  
-  }
+}
   
