@@ -26,6 +26,7 @@ setwd('/home/joebrew/Desktop/temp')
 
 for (i in 1:1000){
   for (j in c("a", "b", "c", "d", "e")){
+    set.seed(i * sample(1:10, 1) + 1^2)
     stays[i] <- monty_hall(stay = TRUE)
     changes[i] <- monty_hall(stay = FALSE)
     
