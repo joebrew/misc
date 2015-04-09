@@ -1,4 +1,5 @@
 library(RCurl)
+options(RCurlOptions = list(cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl")))
 
 #########
 # SET LOCAL WORKING DIRECTORY
@@ -11,18 +12,20 @@ setwd("gnv_crime")
 #########
 # READ IN GAINESVILLE CRIME DATA
 #########
-# define the link for gainesville crime
-# my_link1 <- "https://data.cityofgainesville.org/api/views/gvua-xt9q/rows.csv?accessType=DOWNLOAD" #"http://data.cityofgainesville.org/api/views/9ccb-cyth/rows.csv"
+# # define the link for gainesville crime
+# my_link1 <- 'https://data.cityofgainesville.org/api/views/gvua-xt9q/rows.csv?accessType=DOWNLOAD'
 # my_link2 <- getURL(my_link1)
 # 
 # # read in the data
-# gnv <- read.csv(my_link1)
-gnv <- read.csv("feb2.csv")
+# gnv <- read.csv(my_link2)
+
+gnv <- read.csv("april1.csv")
+
 #########
 # CLEAN IT UP A BIT
 #########
 # write a function to clean lat lon points
-JoeFun <- function(x){
+clean_up <- function(x){
   
   # split the string to keep only the lat, lon, part
   a <- do.call(rbind, strsplit(as.character(x), "\n"))
@@ -44,20 +47,60 @@ JoeFun <- function(x){
   
   return(bb)
 }
-x <- JoeFun(gnv$location)
+x <- clean_up(gnv$location)
 # now join x to gnv
 gnv <- cbind(gnv, x)
 rm(x)
 
 # Make a date column
-#gnv$date <- as.Date(substr(gnv$Offense.Date,1,10), format = "%m/%d/%Y")
+gnv$date <- as.Date(substr(gnv$offense_date,1,10), format = "%m/%d/%Y")
 
 # view it
 hist(gnv$date, breaks = 100)
 
 # Remove dates prior to 2013
-#gnv <- gnv[which(gnv$date > "2013-01-01"),]
+gnv <- gnv[which(gnv$date > "2013-01-01"),]
 hist(gnv$date, breaks = 100)
+
+#####
+# GROUP BY DATES
+#####
+library(dplyr)
+gnv_agg <- gnv %>%
+  group_by(date) %>%
+  summarise(n = n())
+all_dates <- data.frame(date = seq(min(gnv_agg$date),
+                                   max(gnv_agg$date),
+                                   1))
+gnv_agg <- left_join(all_dates, gnv_agg)
+
+plot(gnv_agg$date, gnv_agg$n)
+
+#####
+# FUNCTION TO SUBSET BY NARRATIVE
+##### 
+crime <- function(narrative = 'ROBBERY',
+                  ts = FALSE){
+  
+  
+  sub_data <- gnv[which(grepl(narrative, gnv$narrative)),]
+  if(ts){
+    sub_data_agg <- sub_data %>%
+      group_by(date) %>%
+      summarise(n = n())
+    
+    all_dates <- data.frame(date = seq(min(sub_data_agg$date),
+                                       max(sub_data_agg$date),
+                                       1))
+    return_obj <- left_join(all_dates, sub_data_agg)
+  } else{
+    return_obj <- sub_data
+  }
+  return(return_obj)  
+}
+
+assault <- crime(narrative = 'ASSAULT')
+car <- crime(narrative = 'DRUG')
 
 ######### 
 # ADVANCED LEAFLET MAPS
@@ -80,7 +123,7 @@ mymap$enablePopover(TRUE)
 
 mymap$fullScreen(TRUE)
 
-for (i in 1:100){
+for (i in 1:500){
   mymap$marker(c(gnv$lat[i], gnv$lon[i]),
                bindPopup = paste(gnv$narrative[i],
                                  gnv$offense_date[i]))
